@@ -1,4 +1,4 @@
-name: "Release ${{ env.TAG_NAME }}"
+name: "Release ${{ github.run_number }}"
 on:
   push:
     tags:
@@ -15,7 +15,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        release_name: Release ${{ env.TAG_NAME }}
+        tag_name: ${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
