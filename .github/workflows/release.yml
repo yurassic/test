@@ -12,8 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Generate Changelog
-        run: echo "## Changelog\n\n$(git log --pretty=format:'%h %s' -n 20)" > CHANGELOG.md
+      - name: Read CHANGELOG
+        id: changelog
+        run: |
+          echo "::set-output name=body::$(cat CHANGELOG.md)"
 
       - name: Create Release
         id: create_release
@@ -23,7 +25,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body_path: CHANGELOG.md
+          body: ${{ steps.changelog.outputs.body }}
           draft: false
           prerelease: false
 
